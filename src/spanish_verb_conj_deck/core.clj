@@ -29,10 +29,16 @@
         (println output_str)
         (swap! article_set conj output_str)))))
 
+(defn print-entry [form form_eng_prefix mapentry startindex]
+  (println form_eng_prefix (subs (:verb_english mapentry) startindex) "(" (:tense_english mapentry) " - " (:mood_english mapentry) "):"
+           (form mapentry) " (" (:tense mapentry) " - " (:mood mapentry)" )"))
+
 (defn print-form [form form_eng_prefix mapentry]
-  (if (not (= "" (form mapentry)))
-    (println form_eng_prefix (subs (:verb_english mapentry) 2) "(" (:tense_english mapentry) " - " (:mood_english mapentry) "):"
-           (form mapentry) " (" (:tense mapentry) " - " (:mood mapentry)" )")))
+    (cond
+      (= "" (form mapentry)) nil
+      (= "Imperative Affirmative" (:mood_english mapentry)) (print-entry form form_eng_prefix mapentry 0)
+      (= "Imperative Negative" (:mood_english mapentry)) (print-entry form form_eng_prefix mapentry 0)
+      :else (print-entry form form_eng_prefix mapentry 2)))
 
 (defn iterate-csvmap [csvmaplist]
   (doseq [csvmap csvmaplist]
