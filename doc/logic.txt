@@ -1,0 +1,27 @@
+Verb logic
+ 
+Map str -> str
+ 
+Add infinitive, then gerund, then past participle
+ 
+form_es = [mood + tense]
+form_en = [mood_english + tense_english]
+ 
+iterate over forms 1s,2s,3s,1p,2p,3p
+    if (Imperative affirm or neg)
+                skip
+                Replace initial "I" from verb_english, with form_prefix
+                Add to map "verb _english, form_es, form_en" -> form_quant
+ 
+Iterate over map and dump
+ 
+ 
+ 
+form_prefix
+                1s = I
+                2s = You
+                3s = He/She
+                1p = We
+                2p = You all
+                3p = They
+ 
