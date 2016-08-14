@@ -22,7 +22,7 @@
        doall)))
 
 (defn print-article [eng_key eng_append esp_key esp_append csvmap]
-  (let [output_str (str (eng_key csvmap) eng_append ":" (str (esp_key csvmap)) esp_append)]
+  (let [output_str (str (eng_key csvmap) "<br>" eng_append ":" (str (esp_key csvmap)) "<br>" esp_append)]
     (if (contains? @article_set output_str)
       nil
       (do
@@ -30,8 +30,8 @@
         (swap! article_set conj output_str)))))
 
 (defn print-entry [form form_eng_prefix mapentry startindex]
-  (println form_eng_prefix (subs (:verb_english mapentry) startindex) "(" (:tense_english mapentry) " - " (:mood_english mapentry) "):"
-           (form mapentry) " (" (:tense mapentry) " - " (:mood mapentry)" )"))
+  (println (str form_eng_prefix (subs (:verb_english mapentry) startindex) "<br>(" (:tense_english mapentry) " - " (:mood_english mapentry) "):"
+           (form mapentry) " <br>(" (:tense mapentry) " - " (:mood mapentry)" )")))
 
 (defn print-form [form form_eng_prefix mapentry]
     (cond
