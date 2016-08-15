@@ -6,12 +6,12 @@
 
 
 (def article_set (atom (hash-set)))
-(def forms [[:form_1s "I"],
-            [:form_2s "You"],
-            [:form_3s "He/She"],
-            [:form_1p "We"],
-            [:form_2p "You all"],
-            [:form_3p "They"]])
+(def forms [[:form_1s "I "],
+            [:form_2s "You "],
+            [:form_3s "He/She "],
+            [:form_1p "We "],
+            [:form_2p "You all "],
+            [:form_3p "They "]])
 
 (defn parsecsv [csvfile]
   (with-open [in-file (io/reader csvfile)]
