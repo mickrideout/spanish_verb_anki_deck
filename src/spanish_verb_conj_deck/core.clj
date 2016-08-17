@@ -1,17 +1,20 @@
 (ns spanish-verb-conj-deck.core
   (:require [clojure.java.io :as io]
             [clojure-csv.core :as csv]
+            [clojure.string :as string]
             [semantic-csv.core :as sc :refer :all])
   (:gen-class))
 
 
 (def article_set (atom (hash-set)))
-(def forms [[:form_1s "I "],
-            [:form_2s "You "],
-            [:form_3s "He/She "],
-            [:form_1p "We "],
-            [:form_2p "You all "],
-            [:form_3p "They "]])
+
+; [form_key english_prefix convert_was_to_were]
+(def forms [[:form_1s "I " false],
+            [:form_2s "You " true],
+            [:form_3s "He/She " false],
+            [:form_1p "We " true],
+            [:form_2p "You all " true],
+            [:form_3p "They " true]])
 
 (defn parsecsv [csvfile]
   (with-open [in-file (io/reader csvfile)]
@@ -29,24 +32,27 @@
         (println output_str)
         (swap! article_set conj output_str)))))
 
-(defn print-entry [form form_eng_prefix mapentry startindex]
-  (println (str form_eng_prefix (subs (:verb_english mapentry) startindex) "<br>(" (:tense_english mapentry) " - " (:mood_english mapentry) "):"
-           (form mapentry) " <br>(" (:tense mapentry) " - " (:mood mapentry)" )")))
+(defn print-entry [form form_eng_prefix convert_was mapentry startindex]
+  (let [outstr (str form_eng_prefix (subs (:verb_english mapentry) startindex) "<br>(" (:tense_english mapentry) " - " (:mood_english mapentry) "):"
+           (form mapentry) " <br>(" (:tense mapentry) " - " (:mood mapentry)" )")]
+    (if convert_was
+      (println (string/replace outstr #"\swas\s" " were "))
+      (println outstr))))
 
-(defn print-form [form form_eng_prefix mapentry]
+(defn print-form [form form_eng_prefix convert_was mapentry]
     (cond
       (= "" (form mapentry)) nil
-      (= "Imperative Affirmative" (:mood_english mapentry)) (print-entry form form_eng_prefix mapentry 0)
-      (= "Imperative Negative" (:mood_english mapentry)) (print-entry form form_eng_prefix mapentry 0)
-      :else (print-entry form form_eng_prefix mapentry 2)))
+      (= "Imperative Affirmative" (:mood_english mapentry)) (print-entry form form_eng_prefix convert_was mapentry 0)
+      (= "Imperative Negative" (:mood_english mapentry)) (print-entry form form_eng_prefix convert_was mapentry 0)
+      :else (print-entry form form_eng_prefix convert_was mapentry 2)))
 
 (defn iterate-csvmap [csvmaplist]
   (doseq [csvmap csvmaplist]
     (print-article :infinitive_english " (infinitive)" :infinitive " (infinitivo)" csvmap)
     (print-article :gerund_english " (gerund)" :gerund " (gerundio)" csvmap)
     (print-article :pastparticiple_english " (past participle)" :pastparticiple " (preterite participio)" csvmap)
-    (doseq [[form eng_prefix] forms]
-      (print-form form eng_prefix csvmap))))
+    (doseq [[form eng_prefix convert_was] forms]
+      (print-form form eng_prefix convert_was csvmap))))
 
 (defn -main
   "Print out spanish anki deck cards of spanish verb conjugations"
