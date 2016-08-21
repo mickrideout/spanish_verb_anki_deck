@@ -38,7 +38,7 @@
         convert_was (:was_conv form_map)
         convert_have (and (= "Present Perfect" (:tense_english mapentry)) (:have_conv form_map))
         outstr (str form_eng_prefix (subs (:verb_english mapentry) startindex) "<br>(" (:tense_english mapentry) " - " (:mood_english mapentry) "):"
-           (form mapentry) " <br>(" (:tense mapentry) " - " (:mood mapentry)" )")]
+           (form mapentry) " <br>(" (:tense mapentry) " - " (:mood mapentry) ")")]
     (println
       (cond
         convert_have (string/replace outstr #"\shave\s" " has ")
