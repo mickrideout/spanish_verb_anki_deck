@@ -1,32 +1,26 @@
 # spanish-verb-conj-deck
 
-FIXME: description
+A Spanish to English verb conjugation Anki deck generator.
 
 ## Installation
 
-Download from http://example.com/FIXME.
+Clojure Leiningen is needed to build this project: https://leiningen.org/#install
+
+Build the uberjar which is built to the target directory target/uberjar:
+    lein uberjar
+    
 
 ## Usage
 
-FIXME: explanation
+To generate the anki deck:
 
-    $ java -jar spanish-verb-conj-deck-0.1.0-standalone.jar [args]
+    $ java -jar spanish-verb-conj-deck-0.1.0-standalone.jar [output.csv]
 
-## Options
 
-FIXME: listing of options this app accepts.
+### Acknowledgement
 
-## Examples
+Spanish verb data is produced by Fred F. Jehle https://users.pfw.edu/jehle/verblist.htm
 
-...
-
-### Bugs
-
-...
-
-### Any Other Sections
-### That You Think
-### Might be Useful
 
 ## License
 
