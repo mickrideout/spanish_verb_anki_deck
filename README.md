@@ -8,7 +8,7 @@ Clojure Leiningen is needed to build this project: https://leiningen.org/#instal
 
 Build the uberjar which is built to the target directory `target/uberjar`:
 ```
-    lein uberjar
+lein uberjar
 ```
 
 ## Usage
