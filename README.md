@@ -6,9 +6,10 @@ A Spanish to English verb conjugation Anki deck generator.
 
 Clojure Leiningen is needed to build this project: https://leiningen.org/#install
 
-Build the uberjar which is built to the target directory target/uberjar:
+Build the uberjar which is built to the target directory `target/uberjar`:
+```
     lein uberjar
-    
+```
 
 ## Usage
 
